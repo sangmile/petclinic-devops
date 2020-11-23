@@ -61,7 +61,6 @@ docker@minikube:~$ mkdir /logs
 
 - `nginx-ingress-controller` 배포
 ```bash
-$ minikube ssh
 $ minikube addons enable ingress
 ```
 
@@ -91,7 +90,6 @@ root# echo "$(minikube ip) ${DOCKERHUB_USERNAME}.io" >> /etc/hosts
 <img src="petclinic.png" alt="petclinic">
 
 ## 요구사항 적용 내용
----
 1. gradle을 사용하여 어플리케이션과 도커이미지 빌드한다.
     - `palantir` plugin 설정 후 아래 명령어 실행
     ```
