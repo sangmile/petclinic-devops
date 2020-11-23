@@ -4,7 +4,6 @@
 - 요구 사항에 부합하도록 빌드 스크립트, 어플리케이션 코드, kubernetes에 배포하기 위한 파일을 작성
 
 ## 설정 내용
----
 ### 1. 구성 환경
 - Ubuntu 18.04
 - git version 2.17.1
@@ -40,9 +39,10 @@ $ cd petclinic-devops
 ```
 
 - `build.gradle` 파일 생성  
-<YOUR_DOCKERHUB_USERNAME>를 DOCKERHUB에 로그인한 계정으로 대체합니다.
+`<YOUR_DOCKERHUB_USERNAME>`를 Docker Hub에 로그인한 계정명으로 대체합니다.  
+`build.gradle.template` 파일을 통해 `build.gradle` 파일을 생성합니다.
 ```bash
-DOCKERHUB_USERNAME=<YOUR_DOCKERHUB_USERNAME>
+export DOCKERHUB_USERNAME=<YOUR_DOCKERHUB_USERNAME>
 envsubst < template/build.gradle.template > build.gradle
 ```
 
