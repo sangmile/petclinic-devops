@@ -98,21 +98,21 @@ root# echo "$(minikube ip) ${DOCKERHUB_USERNAME}.io" >> /etc/hosts
 
 2. 어플리케이션의 log는 host의 /logs 디렉토리에 적재한다.
     - `src/main/resources/application.properties` 파일 내 `logging.file.path=logs` 설정
-    - `kubernetes/app-deploy.yaml` 파일 내 `volume` 관련 설정
+    - `template/app-deploy.yaml.template` 파일 내 `volume` 관련 설정
     - 컨테이너 `/logs` 디렉토리를 host의 `/logs` 디렉토리에 마운트
 
 3. 정상 동작 여부를 반환하는 api를 구현하며, 10초에 한번 체크하도록 한다. 3번 연속 체크에 실패하면 어플리케이션은 restart 된다.
     - `src/main/resources/application.properties` 파일 내 `Actuator` 설정
-    - `kubernetes/app-deploy.yaml` 파일 내 `livenessProbe` 설정
+    - `template/app-deploy.yaml.template` 파일 내 `livenessProbe` 설정
 
 4. 종료 시 30초 이내에 프로세스가 종료되지 않으면 SIGKILL로 강제 종료 시킨다.
-    - `kubernetes/app-deploy.yaml` 파일
+    - `template/app-deploy.yaml.template` 파일
     ```yaml
         terminationGracePeriodSeconds: 30
     ```
 
 5. 배포 시와 scale in/out 시 유실되는 트래픽이 없어야 한다.
-    - `kubernetes/app-deploy,yaml` 파일 내 `strategy` 설정
+    - `template/app-deploy,yaml.template` 파일 내 `.spec.strategy.type=RollingUpdate` 설정
 
 6. 어플리케이션 프로세스는 root 계정이 아닌 uid:1000으로 실행한다.
     - `Dockerfile` 파일 내 `user` 관련 설정
@@ -122,18 +122,18 @@ root# echo "$(minikube ip) ${DOCKERHUB_USERNAME}.io" >> /etc/hosts
     ```
 
 7. DB도 kubernetes에서 실행하며 재 실행 시에도 변경된 데이터는 유실되지 않도록 설정한다.
-    - `kubernetes/mysql-deploy.yaml` 파일: mysql 실행
+    - `kubernetes/mysql-deploy.yaml` 파일: `mysql` 이미지, PVC, Voluem 마운트 설정
     - `kubernetes/mysql-pv-volume.yaml` 파일: Persistent Volume 생성
-    - `kubernetes/mysql-deploy.yaml` 파일: PVC 및 Volume 마운트
 
 8. 어플리케이션과 DB는 cluster domain을 이용하여 통신한다.
-    - `src/main/resources/application.properties` 파일
-    ```conf
-    spring.datasource.url=jdbc:mysql://mysql.default.svc.cluster.local:3306/petclinic
+    - `template/app-deploy.yaml.template` 파일 설정
+    ```yaml
+        - name: MYSQL_CLUSTER_DOMAIN
+            value: mysql.default.svc.cluster.local
     ```
 
 9. nginx-ingress-controller를 통해 어플리케이션에 접속이 가능하다.
-    - `kubernetes/app-ingress.yaml` 파일
+    - `template/app-ingress.yaml.template` 파일 설정
 
 10. namespace는 default를 사용한다.
     - `namespace`: default
