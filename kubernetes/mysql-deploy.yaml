@@ -31,7 +31,6 @@ spec:
       labels:
         app: mysql
     spec:
-      subdomain: mysql
       containers:
         - name: mysql
           image: mysql

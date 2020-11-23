@@ -5,7 +5,7 @@ metadata:
   name: petclinic-ingress
 spec:
   rules:
-    - host: sangmile.io
+    - host: ${DOCKERHUB_USERNAME}.io
       http:
         paths:
           - path: /

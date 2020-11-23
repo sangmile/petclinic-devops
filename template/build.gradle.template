@@ -65,7 +65,7 @@ task copyJar(type: Copy) {
 docker {
     name "${project.name}:${project.version}"
     copySpec.from(tasks.copyJar.outputs).into("dependency")
-    tag 'DockerHub', "sangmile/${project.name}:latest"
+    tag 'DockerHub', "${DOCKERHUB_USERNAME}/${project.name}:latest"
 }
 
 dependencies {
