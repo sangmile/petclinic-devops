@@ -1,5 +1,5 @@
-# DevOps 사전 과제
-### 과제 내용
+# 쿠버네티스 핸즈온
+### 내용
 웹 어플리케이션 spring-petclinic-data-jdbc을 kubernetes 환경에서 실행하고자 합니다.
 - 요구 사항에 부합하도록 빌드 스크립트, 어플리케이션 코드, kubernetes에 배포하기 위한 파일을 작성
 
